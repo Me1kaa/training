@@ -53,7 +53,7 @@ LCA(3,3) => 3
         T val;
     }
 
-//Posible solution
+//Possible solution
 //    public <T> TreeNode<T> leastCommonAncestor(TreeNode<T> root, TreeNode<T> p, TreeNode<T> q) {
 //        if (root == null) {
 //            return null;
