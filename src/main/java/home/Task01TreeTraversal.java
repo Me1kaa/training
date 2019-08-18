@@ -34,7 +34,6 @@ public class Task01TreeTraversal {
         System.out.println(createInOrderRec(tree));
         System.out.println(createInOrderIter(tree));
         System.out.println(createPostOrderRec(tree));
-        System.out.println(createPostOrderIter(tree));
     }
 
     private static <T> List<T> createPreOrderRec(TreeNode<T> node) {
@@ -89,25 +88,28 @@ public class Task01TreeTraversal {
     }
 
     private static <T> List<T> createPostOrderIter(TreeNode<T> node) {
-        Deque<TreeNode<T>> resultStack = new ArrayDeque<>();
+        if(node == null) return Collections.emptyList();
+        Deque<T> resultStack = new ArrayDeque<>();
         Deque<TreeNode<T>> traversalStack = new ArrayDeque<>();
-        resultStack.push(node);
+        resultStack.push(node.val);
         traversalStack.push(node);
         do {
             while (node.right != null) {
-                resultStack.push(node.right);
+                resultStack.push(node.right.val);
                 traversalStack.push(node.right);
                 node = node.right;
             }
-            node = traversalStack.pop();
+
+            while(!traversalStack.isEmpty()
+                    && (node = traversalStack.pop()).left == null);
             if(node.left != null) {
-                resultStack.push(node.left);
+                resultStack.push(node.left.val);
                 traversalStack.push(node.left);
                 node = node.left;
             }
         } while (!traversalStack.isEmpty());
 
-        return resultStack.stream().map(e -> e.val).collect(Collectors.toList());
+        return new ArrayList<>(resultStack);
     }
 
     private static <T> List<T> createPreOrderIter(TreeNode<T> root) {
